@@ -1,0 +1,16 @@
+var
+├──integer
+│├──a
+│├──n
+begin
+├──:=
+│├──n
+│├──1
+├──while
+│├──<=
+││├──n
+││├──0
+├──do
+│├──begin
+│├──end
+end

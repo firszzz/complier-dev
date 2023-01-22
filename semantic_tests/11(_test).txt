@@ -1,0 +1,5 @@
+var a:integer;
+n:string;
+begin 
+	a:=n+ 'frd'
+end.

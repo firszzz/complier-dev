@@ -1,0 +1,5 @@
+var a:integer;
+n:float;
+begin { основная программа }
+    n:=(n+a)/10+52*(1+5)-(-a)*54
+end.

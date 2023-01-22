@@ -1,0 +1,4 @@
+var a:string;
+begin 
+	a:=38
+end.

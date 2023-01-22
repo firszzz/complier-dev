@@ -1,0 +1,13 @@
+1	1	Integer	12	12
+1	3	Delimiter	..
+1	5	Integer	8	8
+2	1	Delimiter	[
+2	2	Identifier	n
+2	3	Delimiter	..
+2	5	Integer	85	85
+2	7	Delimiter	]
+3	1	Delimiter	[
+3	2	Integer	1	1
+3	3	Delimiter	..
+3	5	Integer	875459	875459
+3	11	Delimiter	]

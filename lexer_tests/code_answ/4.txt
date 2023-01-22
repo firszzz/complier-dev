@@ -1,0 +1,2 @@
+1	1	String	'assdf sdfsd sdf eeerw'	assdf sdfsd sdf eeerw
+Строка  2, символ 1. Встречена лексическая ошибка в лексеме """

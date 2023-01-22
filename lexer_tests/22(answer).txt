@@ -1,0 +1,6 @@
+1	1	Identifier	class
+1	6	Delimiter	.
+1	7	Identifier	method
+1	13	Delimiter	(
+1	14	Integer	32	32
+1	16	Delimiter	)

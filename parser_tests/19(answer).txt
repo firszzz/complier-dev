@@ -1,0 +1,13 @@
+var
+├──integer
+│├──a
+│├──n
+begin
+├──if
+│├──=
+││├──a
+││├──0
+├──then
+│├──writeln
+││├──n
+end

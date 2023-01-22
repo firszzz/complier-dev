@@ -1,0 +1,5 @@
+var a:integer;
+n:float;
+begin 
+	n:=a/5.5
+end.

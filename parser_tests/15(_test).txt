@@ -1,0 +1,7 @@
+var a,n:integer;
+begin
+	while ( n <= 0 ) do begin
+a := 1;
+a := 2;
+end;
+end.

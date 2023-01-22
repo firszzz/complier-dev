@@ -1,0 +1,4 @@
+var a:integer;
+begin 
+	a:=5*38+7
+end.

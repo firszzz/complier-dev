@@ -1,0 +1,16 @@
+var
+├──a
+│├──integer
+├──n
+│├──integer
+begin
+├──:=
+│├──a
+││├──integer
+││├──-
+│││├──n
+││││├──integer
+│││├──5
+││││├──integer
+│││├──integer
+end

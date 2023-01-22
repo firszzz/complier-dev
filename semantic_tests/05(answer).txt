@@ -1,0 +1,15 @@
+var
+├──a
+│├──integer
+begin
+├──:=
+│├──a
+││├──integer
+│├──38
+││├──integer
+├──:=
+│├──a
+││├──integer
+│├──380
+││├──integer
+end

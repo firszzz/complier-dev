@@ -1,0 +1,4 @@
+var a, n, a:integer;
+begin 
+	a:=38
+end.

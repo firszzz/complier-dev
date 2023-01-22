@@ -1,0 +1,13 @@
+1	1	Key Word	var
+1	5	Identifier	a
+1	6	Delimiter	:
+1	7	Key Word	array
+1	12	Delimiter	[
+1	13	Integer	1	1
+1	14	Delimiter	..
+1	16	Integer	10	10
+1	18	Delimiter	]
+1	20	Key Word	of
+1	23	Identifier	integer
+1	30	Delimiter	;
+Строка  2, символ 5. Встречена лексическая ошибка в лексеме "23s"

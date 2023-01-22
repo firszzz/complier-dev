@@ -1,0 +1,4 @@
+var a,n:integer;
+begin
+	if a = 0 then writeln( n );
+end.

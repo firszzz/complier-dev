@@ -1,0 +1,5 @@
+var a:integer;
+begin 
+	a:=38;
+	a:=380;
+end.

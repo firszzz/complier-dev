@@ -1,0 +1,21 @@
+1	1	Key Word	type
+2	2	Identifier	an
+2	5	Operator	=
+2	7	Operator	^
+2	8	Identifier	integer
+2	15	Delimiter	;
+3	1	Key Word	var
+4	2	Identifier	t
+4	3	Delimiter	:
+4	5	Identifier	integer
+4	12	Delimiter	;
+5	2	Identifier	c
+5	4	Delimiter	:
+5	6	Identifier	an
+5	9	Operator	:=
+5	12	Operator	@
+5	13	Identifier	t
+5	14	Delimiter	;
+6	1	Key Word	begin
+7	1	Key Word	end
+7	4	Delimiter	.

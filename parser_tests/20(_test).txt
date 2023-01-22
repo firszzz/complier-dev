@@ -1,0 +1,7 @@
+var a,n:integer;
+begin
+	if a = 0 then
+	begin writeln( n ); 
+	n:=5
+end;
+end.

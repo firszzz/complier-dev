@@ -1,0 +1,7 @@
+type
+	An = ^integer;
+var
+	t: integer;
+	c : An := @t;
+begin
+end.

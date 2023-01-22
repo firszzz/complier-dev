@@ -1,0 +1,6 @@
+var a: integer;
+begin
+  a:=1;
+  repeat a += 1
+  until a<20;
+end.

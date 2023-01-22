@@ -1,0 +1,4 @@
+var a,n:integer;
+begin
+	if n <= 0 then a := 1
+end.

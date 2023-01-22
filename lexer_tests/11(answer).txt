@@ -1,0 +1,76 @@
+1	1	Key Word	var
+1	19	Identifier	a
+1	20	Delimiter	,
+1	21	Identifier	n
+1	22	Delimiter	,
+1	23	Identifier	c
+1	24	Delimiter	,
+1	25	Identifier	d
+1	26	Delimiter	:
+1	27	Identifier	word
+1	31	Delimiter	;
+2	1	Key Word	begin
+3	5	Key Word	readln
+3	11	Delimiter	(
+3	13	Identifier	a
+3	15	Delimiter	)
+3	16	Delimiter	;
+4	5	Identifier	n
+4	6	Operator	:=
+4	8	Integer	1	1
+4	9	Delimiter	;
+5	5	Key Word	while
+5	11	Delimiter	(
+5	13	Identifier	n
+5	15	Operator	<=
+5	18	Identifier	sqrt
+5	22	Delimiter	(
+5	23	Identifier	a
+5	24	Delimiter	)
+5	26	Delimiter	)
+5	28	Key Word	do
+5	31	Key Word	begin
+6	8	Identifier	c
+6	9	Operator	:=
+6	11	Identifier	a
+6	13	Key Word	mod
+6	17	Identifier	n
+6	18	Delimiter	;
+7	8	Identifier	d
+7	9	Operator	:=
+7	11	Identifier	a
+7	13	Key Word	div
+7	17	Identifier	n
+7	18	Delimiter	;
+8	8	Key Word	if
+8	11	Identifier	c
+8	13	Operator	=
+8	15	Integer	0	0
+8	17	Key Word	then
+8	22	Key Word	begin
+9	11	Key Word	writeln
+9	18	Delimiter	(
+9	20	Identifier	n
+9	22	Delimiter	)
+9	23	Delimiter	;
+10	11	Key Word	if
+10	14	Identifier	n
+10	16	Operator	<>
+10	19	Identifier	d
+10	21	Key Word	then
+10	26	Key Word	writeln
+10	33	Delimiter	(
+10	35	Identifier	d
+10	37	Delimiter	)
+10	38	Delimiter	;
+11	8	Key Word	end
+11	11	Delimiter	;
+12	8	Identifier	inc
+12	11	Delimiter	(
+12	13	Identifier	n
+12	15	Delimiter	)
+12	16	Delimiter	;
+13	5	Key Word	end
+13	8	Delimiter	;
+14	1	Key Word	end
+14	4	Delimiter	.

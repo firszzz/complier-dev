@@ -1,0 +1,5 @@
+1	1	Integer	$2555	9557
+2	1	Integer	$f54d	62797
+3	1	Integer	&754	492
+4	1	Integer	&1101	577
+5	1	Integer	%1101	13

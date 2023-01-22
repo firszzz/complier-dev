@@ -1,0 +1,4 @@
+var a,n,:integer;
+begin
+	n := 1
+end.

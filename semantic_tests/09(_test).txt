@@ -1,0 +1,4 @@
+var a,n:integer;
+begin 
+	a:=n-5
+end.

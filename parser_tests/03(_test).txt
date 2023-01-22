@@ -1,0 +1,4 @@
+var a:string;
+begin
+	readln( a );
+end.

@@ -1,0 +1,16 @@
+var
+├──a
+│├──integer
+├──n
+│├──float
+begin
+├──:=
+│├──n
+││├──float
+││├──/
+│││├──a
+││││├──integer
+│││├──5
+││││├──integer
+│││├──float
+end

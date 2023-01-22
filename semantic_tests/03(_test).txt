@@ -1,0 +1,5 @@
+var a:string;
+b,c:integer;
+begin 
+	a:='35'
+end.

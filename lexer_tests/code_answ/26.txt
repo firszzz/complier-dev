@@ -1,0 +1,27 @@
+1	1	Identifier	a
+1	3	Operator	:=
+1	6	Integer	55	55
+1	8	Operator	*
+1	9	Operator	*
+1	10	Integer	4	4
+2	1	Identifier	f
+2	2	Operator	:=
+2	4	Identifier	f
+2	5	Operator	*
+2	6	Operator	*
+2	7	Integer	41	41
+2	9	Operator	-
+2	10	Integer	54	54
+2	12	Operator	*
+2	13	Operator	*
+2	14	Integer	1	1
+2	15	Operator	+
+2	16	Delimiter	(
+2	17	Operator	-
+2	18	Integer	5	5
+2	19	Operator	+
+2	20	Integer	1	1
+2	21	Delimiter	)
+2	22	Operator	*
+2	23	Operator	*
+2	24	Integer	2	2

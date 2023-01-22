@@ -1,0 +1,5 @@
+var a:integer;
+n:float;
+begin 
+	a:=n/5
+end.

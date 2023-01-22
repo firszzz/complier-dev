@@ -1,0 +1,66 @@
+1	1	Key Word	var
+1	5	Identifier	a
+1	6	Delimiter	:
+1	7	Key Word	array
+1	12	Delimiter	[
+1	13	Integer	1	1
+1	14	Delimiter	..
+1	16	Integer	10	10
+1	18	Delimiter	]
+1	20	Key Word	of
+1	23	Identifier	integer
+1	30	Delimiter	;
+2	5	Identifier	s
+2	6	Delimiter	:
+2	7	Identifier	longint
+2	14	Delimiter	;
+3	5	Identifier	i
+3	6	Delimiter	:
+3	7	Identifier	integer
+3	14	Delimiter	;
+4	1	Key Word	begin
+5	6	Key Word	writeln
+5	13	Delimiter	(
+5	14	String	'введите 10 элементов массива'	введите 10 элементов массива
+5	44	Delimiter	)
+5	45	Delimiter	;
+6	6	Identifier	s
+6	7	Operator	:=
+6	9	Integer	0	0
+6	10	Delimiter	;
+7	6	Key Word	for
+7	10	Identifier	i
+7	11	Operator	:=
+7	13	Integer	1	1
+7	15	Key Word	to
+7	18	Integer	10	10
+7	21	Key Word	do
+7	24	Key Word	begin
+8	9	Key Word	readln
+8	15	Delimiter	(
+8	17	Identifier	a
+8	18	Delimiter	[
+8	19	Identifier	i
+8	20	Delimiter	]
+8	22	Delimiter	)
+8	23	Delimiter	;
+9	9	Identifier	s
+9	10	Operator	:=
+9	12	Identifier	s
+9	13	Operator	+
+9	14	Identifier	a
+9	15	Delimiter	[
+9	16	Identifier	i
+9	17	Delimiter	]
+9	18	Delimiter	;
+10	6	Key Word	end
+10	9	Delimiter	;
+11	6	Key Word	writeln
+11	13	Delimiter	(
+11	15	String	'сумма элементов массива = '	сумма элементов массива = 
+11	43	Delimiter	,
+11	45	Identifier	s
+11	47	Delimiter	)
+11	48	Delimiter	;
+12	1	Key Word	end
+12	4	Delimiter	.

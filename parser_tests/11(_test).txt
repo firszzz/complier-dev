@@ -1,0 +1,4 @@
+var a,n:integer;
+begin
+	n := sqrt(a)*2-1+
+end.

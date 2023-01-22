@@ -1,0 +1,7 @@
+1	1	Float	0.215	0.215
+2	1	Delimiter	[
+2	2	Integer	0	0
+2	3	Delimiter	..
+2	5	Integer	1	1
+2	6	Delimiter	]
+Строка  3, символ 1. Встречена лексическая ошибка в лексеме ".2"

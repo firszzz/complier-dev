@@ -5,7 +5,7 @@ import sys
 class Parser():
 
     def __init__(self, testname):
-        self.lexAnalizer = GetLex.GetLex(testname)
+        self.lexAnalizer = GetLex.LexAnalyzer(testname)
         self.curlex = ''
 
     def Require(self, name):
@@ -104,7 +104,6 @@ class Parser():
         body = self.parseStmt()
         self.Require([";"])
         return Node.ProcedureNode(params[0], params[1], params[2], params[4], body, params[3])
-
     
     def parseVar(self):
         self.curlex = self.lexAnalizer.getLex()
@@ -320,12 +319,12 @@ class Parser():
         oplex = self.lexAnalizer.getLex()
         leftpoints = left
 
-         # проверка на бинарные операторы и ключевые слова
+        # проверка на бинарные операторы и ключевые слова
         while (oplex.type == "Operator" or oplex.type == "Key Word") and oplex.lex.lower() in ['+','-', 'or','xor']:
             self.curlex = self.lexAnalizer.nextLex()
             right = self.parseTerm()
             self.checkNodeType([Node.NullNode], right)
-            leftpoints = Node.BinOpNode(oplex, [leftpoints], right)
+            leftpoints = Node.BinaryOpNode(oplex, [leftpoints], right)
             oplex = self.lexAnalizer.getLex()
 
         # Обработка логических операций '=','<>', '<','>', '>=', '<=', 'in'
@@ -352,7 +351,7 @@ class Parser():
                 self.curlex = self.lexAnalizer.nextLex() 
                 right = self.parseFactor()
                 self.checkNodeType([Node.NullNode], right)
-                leftpoints = [Node.BinOpNode(oplex, leftpoints, right)]
+                leftpoints = [Node.BinaryOpNode(oplex, leftpoints, right)]
                 oplex = self.lexAnalizer.getLex()
             else:
                 return leftpoints[0]
@@ -368,7 +367,7 @@ class Parser():
             self.lexAnalizer.nextLex()
             right = self.parseFactor()
             self.checkNodeType([Node.NullNode], right)
-            return Node.UnarOpNode(operation, right)
+            return Node.UnaryOpNode(operation, right)
 
         # проверка на идентификатор, readln, writeln
         if self.curlex.type == "Identifier" or self.curlex.lex == "readln" or self.curlex.lex == "writeln":
@@ -381,7 +380,7 @@ class Parser():
                 mid = self.parseExpression()
                 self.curlex = self.lexAnalizer.getLex()
                 self.Require(["]"])
-                return Node.toMassNode(main, [mid], open, self.curlex)
+                return Node.MassNode(main, [mid], open, self.curlex)
             if oplex.type == "Delimiter" and oplex.lex == "(":
                 main = self.curlex
                 open = oplex
@@ -395,7 +394,7 @@ class Parser():
                         self.curlex = self.lexAnalizer.getLex()
                         self.Require([")", ","])
                 # возвращает узел функции
-                return Node.callNode(main, mid, open, self.curlex)
+                return Node.CallNode(main, mid, open, self.curlex)
             return Node.IdentNode(self.curlex)
         # Этот код обрабатывает случай, когда лексема является целым или дробным числом. Он возвращает экземпляр класса NumberNode с лексемой как аргументом.
         elif self.curlex.type == "Integer" or self.curlex.type == "Float":  

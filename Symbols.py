@@ -2,9 +2,15 @@ from abc import ABC, abstractmethod
 
 import Lexem
 
+def treeLine(space) -> str:
+    return("│"*(space) + "├──")
+
 class Symbol():
+    @abstractmethod
     def __init__(self, name):
         self.name = name
+    def Print(self):
+        pass
 
 class SymType(Symbol):
     def __init__(self, name):
@@ -12,7 +18,7 @@ class SymType(Symbol):
 
     def Print(self,fw, space):
         if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
         else:
             writeline = ""
         fw.write(writeline + self.name + '\n')
@@ -24,7 +30,7 @@ class SymVar(Symbol):
 
     def Print(self, fw, space):
         if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
         else:
             writeline = ""
         fw.write(writeline + self.name.lex + '\n')
@@ -37,7 +43,7 @@ class SymInt(SymType):
 
     def Print(self, fw, space):
         if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
         else:
             writeline = ""
         fw.write(writeline + self.name.lex + '\n')
@@ -50,7 +56,7 @@ class SymFlaot(SymType):
 
     def Print(self, fw, space):
         if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
         else:
             writeline = ""
         fw.write(writeline + self.name.lex + '\n')
@@ -63,7 +69,7 @@ class SymStr(SymType):
 
     def Print(self, fw, space):
         if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
         else:
             writeline = ""
         fw.write(writeline + self.name.lex + '\n')
@@ -76,15 +82,15 @@ class SymArray(SymType):
         self.typeref = SymType(name)
          
     def Print(self, fw, space):
-        writeline = "│"*space + "├──"
-        writeline2 = "│"*(space+1) + "├──"
+        writeline = treeLine(space)
+        writeline2 = treeLine(space + 1)
         for i in self.diap:
             fw.write(writeline  + '[\n')
             fw.write(writeline2 + str(i[0]) + '\n')
             fw.write(writeline2 + str(i[1]) + '\n')
             fw.write(writeline  + ']\n')
         if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
         else:
             writeline = ""
         fw.write(writeline + self.name + '\n')
@@ -101,11 +107,11 @@ class Symfunc(Symbol):
 
     def Print(self, fw, space):
         if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
         else:
             writeline = ""
         fw.write(writeline + self.name + '\n')
-        writeline = "│"*(space) + "├──"
+        writeline = treeLine(space)
         fw.write(writeline +'(\n')
         for i in self.args:
             i.Print(fw, space+2)
@@ -132,7 +138,7 @@ class SymExpr(Symbol):
 
     def Print(self, fw, space):
         if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
         else:
             writeline = ""
         fw.write(writeline + self.name.lex + '\n')
@@ -140,7 +146,10 @@ class SymExpr(Symbol):
         self.right.Print(fw, space+1)
         self.typeref.Print(fw, space+1)
 
+
 #-----------------NODES TO SYMBOLS DUPLICATE----------------------#
+
+
 class Node():
     @abstractmethod
     def Print(self):
@@ -186,7 +195,7 @@ class ProgVarNode(Node):
 
     def Print(self, fw, space):
         if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
         else:
             writeline = ""
         sp = space
@@ -194,10 +203,10 @@ class ProgVarNode(Node):
         if type(self.oprtn) != NullNode:
             sp +=1
         if sp > space:
-            writeline = "│"*(sp-1) + "├──"
+            writeline = treeLine(sp - 1)
         fw.write(writeline + str(self.varanme.lex)+'\n')
         sp+=1
-        writeline = "│"*(sp-1) + "├──"
+        writeline = treeLine(sp - 1)
         if type(self.vartype) == str:
             fw.write(writeline + str(self.vartype)+'\n')
         else:
@@ -211,7 +220,7 @@ class SingleTypeNode(Node):
 
     def Print(self, fw, space):
         if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
         else:
             writeline = ""
         fw.write(writeline + str(self.typename)+'\n')
@@ -227,15 +236,15 @@ class ArrTypeNode(Node):
 
     def Print(self, fw, space):
         if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
         else:
             writeline = ""
         fw.write(writeline + str(self.callW.lex)+'\n')
         self.ofW.Print(fw, space+1)
         self.ofType.Print(fw, space+2)
-        writeline1 = "│"*(space) + "├──"
+        writeline1 = treeLine(space)
         fw.write(writeline1 + str(self.rbrc.lex)+'\n')
-        writeline2 = "│"*(space+1) + "├──"
+        writeline2 = treeLine(space + 1)
         sp = space+2
         if len(self.diap) >1:
             fw.write(writeline2 + ',\n')
@@ -252,7 +261,7 @@ class DiapnNode(Node):
 
     def Print(self, fw, space):
         if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
         else:
             writeline = ""
         fw.write(writeline + str(self.delim.lex)+'\n')
@@ -272,7 +281,7 @@ class BlockNode(Node):
 
     def Print(self, fw, space):
         if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
         else:
             writeline = ""
         fw.write(writeline + 'begin\n')
@@ -287,7 +296,7 @@ class FuncNode(Node):
 
     def Print(self, fw, space):
         if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
         else:
             writeline = ""
         fw.write(writeline + 'function\n')
@@ -302,7 +311,7 @@ class ProcedureNode(Node):
 
     def Print(self, fw, space):
         if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
         else:
             writeline = ""
         fw.write(writeline + 'procedure\n')
@@ -332,7 +341,7 @@ class WhileNode(Node):
 
     def Print(self, fw, space):
         if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
         else:
             writeline = ""
         fw.write(writeline + 'while\n')
@@ -347,7 +356,7 @@ class repeatUntilNode(Node):
 
     def Print(self, fw, space):
         if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
         else:
             writeline = ""
         fw.write(writeline + 'repeat\n')
@@ -364,7 +373,7 @@ class ForNode(Node):
 
     def Print(self, fw, space):
         if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
         else:
             writeline = ""
         fw.write(writeline + 'for\n')
@@ -383,7 +392,7 @@ class IfNode(Node):
 
     def Print(self, fw, space):
         if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
         else:
             writeline = ""
         fw.write(writeline + 'if\n')
@@ -401,7 +410,7 @@ class KeyWordNode(Node):
 
      def Print(self, fw, space):
          if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
          else:
             writeline = ""
          fw.write(writeline + str(self.name)+'\n')
@@ -415,7 +424,6 @@ class NodeRanger(Node): #????
         self.node.Print(space)
 
 class NumberNode(Expression):
-
     def __init__(self,symref):
         self.lexref = symref
 
@@ -423,7 +431,6 @@ class NumberNode(Expression):
         self.lexref.Print(fw, space)
 
 class StringConstNode(Expression):
-
     def __init__(self, symref):
          self.lexref = symref
 
@@ -438,14 +445,14 @@ class IdentNode(Expression):
     def Print(self,fw,  space):
         self.lexref.Print(fw,  space)
         
-class BinOpNode(Expression):
+class BinaryOpNode(Expression):
     def __init__(self, lexref):
         self.lexref = lexref
 
     def Print(self,fw,  space):
         self.lexref.Print(fw,  space+1)
 
-class UnarOpNode(Expression):
+class UnaryOpNode(Expression):
     def __init__(self, lexref):
         self.lexref = lexref
 
@@ -461,7 +468,7 @@ class RecordNode(Expression):
 
     def Print(self, fw, space):
         if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
         else:
             writeline = ""
         fw.write(writeline + self.operetion+'\n')
@@ -476,13 +483,13 @@ class toMassNode(Expression):
 
     def Print(self, fw, space):
         if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
         else:
             writeline = ""
         fw.write(writeline + self.lexref.name.lex+'\n')
-        writeline1 = "│"*space + "├──"
+        writeline1 = treeLine(space)
         fw.write(writeline1 +'[\n')
-        writeline2 = "│"*(space+1) + "├──"
+        writeline2 = treeLine(space + 1)
         for i in self.position:
             fw.write(writeline2 + i +'\n')
         fw.write(writeline1 +']\n')
@@ -495,11 +502,11 @@ class callNode(Expression):
 
     def Print(self, fw, space):
         if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
         else:
             writeline = ""
         fw.write(writeline + self.lexref.name+'\n')
-        writeline = "│"*(space) + "├──"
+        writeline = treeLine(space)
         fw.write(writeline+  '(\n')
         for i in self.middle:
             i.Print(fw, space+2)
@@ -543,7 +550,7 @@ class AssignNode(Node):
 
     def Print(self, fw, space):
         if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
         else:
             writeline = ""
         fw.write(writeline + self.operation + '\n')
@@ -561,7 +568,7 @@ class BoolOpNode(Node):
 
     def Print(self, fw, space):
         if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
         else:
             writeline = ""
         fw.write(writeline + self.operation + '\n')
@@ -577,7 +584,7 @@ class VarAssignNode(Node):
 
     def Print(self, fw, space):
         if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
         else:
             writeline = ""
         fw.write(writeline + self.name + '\n')

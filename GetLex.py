@@ -3,7 +3,7 @@
 import StatesTable
 import Lexem
 
-class GetLex(object):
+class LexAnalyzer(object):
     def __init__(self, testname):
         self.keyWords = ['readln', 'writeln','and', 'array', 'begin', 'case', 'const', 'div', 'do', 'downto', 'else', 'end', 'file', 'for', 'function', 'goto', 'if', 'in', 'label', 'mod', 'nil', 'not', 'of', 'or', 'packed', 'procedure', 'program', 'record', 'repeat', 'set', 'then', 'to', 'type', 'until', 'var', 'while', 'with']
         self.Delimiter = ['.', ';', ',', '(', ')',  '[', ']', ':', '{','}','$', '..']
@@ -22,8 +22,6 @@ class GetLex(object):
         self.numbuf = ''
         self.numstartPos = ''
 
-
-    # возвращает следующую лексему
     def nextLex(self):
         self.numbuf = ''
         self.numstartPos = ''
@@ -56,7 +54,6 @@ class GetLex(object):
                 self.currIndexChar = 0
                 self.currLine += 1
 
-        #Определение типа лексем:
         if prevState == "ENDSTR":
             self.type = 'String'
         if prevState == "ID": 

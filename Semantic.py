@@ -2,12 +2,12 @@ from collections import OrderedDict
 
 import GetLex
 import Symbols
-import Symbols
+import Node
 
 class Parser():
 
     def __init__(self, testname):
-        self.lexAnalizer = GetLex.GetLex(testname)
+        self.lexAnalizer = GetLex.LexAnalyzer(testname)
         self.stackTable = []
         self.curlex = ''
 
@@ -374,7 +374,7 @@ class Parser():
                 symexpr = Symbols.SymExpr(oplex, left, right, newtyperef)
             else:
                 self.errorshow(f'Нельзя преобразовать тип {str(right.lexref.typeref.name)} к {str(left.lexref.typeref.name)}')
-            leftpoints = [Symbols.BinOpNode(symexpr)]
+            leftpoints = [Symbols.BinaryOpNode(symexpr)]
             oplex = self.lexAnalizer.getLex()
         if (oplex.type == "Operator" or oplex.type == "Key Word") and oplex.lex in ['=','<>', '<','>', '>=', '<=', 'in']:
             self.curlex = self.lexAnalizer.nextLex()
@@ -384,7 +384,7 @@ class Parser():
                 symexpr = Symbols.SymExpr(oplex, left, right, newtyperef)
             else:
                 self.errorshow(f'Нельзя сравнить переменные типа {str(right.lexref.typeref.name)} и {str(left.lexref.typeref.name)}')
-            leftpoints = [Symbols.BinOpNode(symexpr)]
+            leftpoints = [Symbols.BinaryOpNode(symexpr)]
             oplex = self.lexAnalizer.getLex()
             return leftpoints[0]
         return leftpoints[0]
@@ -423,7 +423,7 @@ class Parser():
                     symexpr = Symbols.SymExpr(oplex, left, right, newtyperef)
                 else:
                     self.errorshow(f'Нельзя преобразовать тип {str(right.lexref.typeref.name)} к {str(left.lexref.typeref.name)}')
-                leftpoints = [Symbols.BinOpNode(symexpr)]
+                leftpoints = [Symbols.BinaryOpNode(symexpr)]
                 oplex = self.lexAnalizer.getLex()
             else:
                 return leftpoints[0]
@@ -438,7 +438,7 @@ class Parser():
             right = self.parseFactor()
             self.checkNodeType([Symbols.NullNode], right)
             symexpr = Symbols.SymExpr(operation, Symbols.NullNode(), right, right.lexref.typeref)
-            return Symbols.UnarOpNode(symexpr)
+            return Symbols.UnaryOpNode(symexpr)
         if self.curlex.type == "Identifier":
             ident = self.curlex
             symb_var = ''
@@ -496,7 +496,7 @@ class Parser():
                         if mid[i].lexref.typeref.name != tableElem.args[i].varNode.vartype.name:
                             if not (mid[i].lexref.typeref.name == "integer" and tableElem.args[i].varNode.vartype.name == 'float'):
                                 self.errorshow(f'Указана переменная неверного типа')
-                return Symbols.callNode(tableElem, mid)
+                return Symbols.CallNode(tableElem, mid)
             return Symbols.IdentNode(symb_var)
         elif self.curlex.type == "Integer":
             varSym = Symbols.SymInt(self.curlex, Symbols.SymType(self.curlex.type.lower()))

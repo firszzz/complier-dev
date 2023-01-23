@@ -8,7 +8,7 @@ import Semantic
 # -*- coding: utf-8 -*-
 
 if __name__ == '__main__':
-    testtype = '4'
+    testtype = '3'
     correctd = 0
 
     try:
@@ -40,12 +40,11 @@ if __name__ == '__main__':
             testname = directory + "\\" + str(i) + "(_test).txt"
             answname = directory + "\\code_answ\\" + str(i) + ".txt"
             checkname = directory + "\\" + str(i) + "(answer).txt"
-
-        print(testname)
         
         fw = open(answname, 'w', encoding="utf-8")
+
         if testtype == '1':
-            lexAnalizer = GetLex.GetLex(testname)
+            lexAnalizer = GetLex.LexAnalyzer(testname)
             try:
                 lexem = lexAnalizer.getLex()
                 while lexem.lex:
@@ -68,7 +67,9 @@ if __name__ == '__main__':
             parserper = Semantic.Parser(testname)
             result = parserper.parseProgramm()
             result.Print(fw, 0)
+
         fw.close()
+        print(testname)
 
         # Вывод итога теста:
         with open(answname, "r", encoding="utf-8") as thisf, open(checkname, "r", encoding="utf-8") as correct:
@@ -86,7 +87,7 @@ if __name__ == '__main__':
                     print('')
                     correctd += 1
                     break
-    
+
     print('\n')
     print(f'Верных тестов {correctd}/{length - 1}\n')
     print('\n')

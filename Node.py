@@ -400,12 +400,12 @@ class MassNode(Expression):
 
     def Print(self, fw, space):
         if space != 0:
-            writeline = "│"*(space-1) + "├──"
+            writeline = treeLine(space - 1)
         else:
             writeline = ""
         fw.write(writeline + self.mainname+'\n')
         if space != 0:
-            writeline = "│"*(space) + "├──"
+            writeline = treeLine(space)
         else:
             writeline = ""
         fw.write(writeline + self.opensk.lex + '\n')

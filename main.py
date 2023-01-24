@@ -1,5 +1,6 @@
 import os.path
 import sys
+import enum
 
 import GetLex
 import Parse
@@ -8,26 +9,23 @@ import Semantic
 # -*- coding: utf-8 -*-
 
 if __name__ == '__main__':
-    testtype = '3'
+    testnum = 2
     correctd = 0
 
-    try:
-        testtype = sys.argv[1]
-        starttest = int(sys.argv[2])
-    except:
-        pass
+    TestType = enum.Enum(
+        value='TestTypes',
+        names = [
+            ('lexer_tests', 1),
+            ('parse_tests', 2),
+            ('parser_tests', 3),
+            ('semantic_tests', 4),
+        ],
+    )
 
-    if testtype == '1':
-        directory = 'lexer_tests'
-    elif testtype == '2':
-        directory = 'parse_tests'
-    elif testtype == '3':
-        directory = 'parser_tests'
-    elif testtype == '4':
-        directory = 'semantic_tests'
-    else:
-        raise Exception(
-            "Введите 1 для лексического анализатора, 2 для простых выражений, 3 для синтаксического анализатора, 4 для семантического анализатора")
+    for test_type in TestType:
+        if (test_type.value == testnum):
+            directory = test_type.name
+            testtype = test_type.value
 
     length = len([name for name in os.listdir(directory) if os.path.isfile(directory + "\\" + name)]) // 2 + 1
 
@@ -40,10 +38,10 @@ if __name__ == '__main__':
             testname = directory + "\\" + str(i) + "(_test).txt"
             answname = directory + "\\code_answ\\" + str(i) + ".txt"
             checkname = directory + "\\" + str(i) + "(answer).txt"
-        
+    
         fw = open(answname, 'w', encoding="utf-8")
 
-        if testtype == '1':
+        if testtype == TestType['lexer_tests'].value:
             lexAnalizer = GetLex.LexAnalyzer(testname)
             try:
                 lexem = lexAnalizer.getLex()
@@ -52,23 +50,24 @@ if __name__ == '__main__':
                     lexem = lexAnalizer.nextLex()
             except Exception as e:
                 fw.write(str(e))
-        elif testtype == '2':
-            parserper = Parse.Parser(testname)
+        elif testtype == TestType['parse_tests'].value:
+            parser = Parse.Parser(testname)
             try:
-                result = parserper.parseExpression()
+                result = parser.parseExpression()
                 result.Print(fw, 0)
             except Exception as e:
                 fw.write(str(e))
-        elif testtype == '3':
-            parserper = Parse.Parser(testname)
-            result = parserper.parseProgramm()
+        elif testtype == TestType['parser_tests'].value:
+            parser = Parse.Parser(testname)
+            result = parser.parseProgramm()
             result.Print(fw, 0)
-        elif testtype == '4':
-            parserper = Semantic.Parser(testname)
-            result = parserper.parseProgramm()
+        elif testtype == TestType['semantic_tests'].value:
+            parser = Semantic.Parser(testname)
+            result = parser.parseProgramm()
             result.Print(fw, 0)
 
         fw.close()
+
         print(testname)
 
         # Вывод итога теста:
@@ -77,14 +76,12 @@ if __name__ == '__main__':
                 answer = thisf.readline()
                 checker = correct.readline()
                 if answer.split() != checker.split():
-                    print(False)
-                    print('\n')
+                    print(f'Тест №{i} провален\n')
                     print("Ошибка в выражении " + str(checker))
                     print(checker + answer)
                     break
                 if answer == "":
-                    print(True)
-                    print('')
+                    print(f'\nТест №{i} выполнен успешно\n\n')
                     correctd += 1
                     break
 

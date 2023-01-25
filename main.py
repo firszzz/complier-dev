@@ -19,7 +19,9 @@ TestType = enum.Enum(
 )
 
 if __name__ == '__main__':
-    testnum = 2
+    print()
+    testnum = int(input('Введите: <1> для лексического анализатора, <2> для анализа простых выражений,\n<3> для синтаксического анализатора, <4> для семантического анализатора: '))
+    print()
     correctd = 0
 
     directory = list(TestType)[testnum - 1].name

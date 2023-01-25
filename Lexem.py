@@ -7,9 +7,9 @@ class Lexem(object):
         self.type = _type
         self.line = _line
         self.charn = _charn
-        self.mean = self.ismeannum()
+        self.mean = self.getValue()
 
-    def ismeannum(self):
+    def getValue(self):
         if  self.lex:
             if self.lex[0] == "$":
                 return int(self.lex[1:], 16)

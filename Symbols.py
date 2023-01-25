@@ -87,7 +87,7 @@ class SymStruct(Symbol):
     def __init__(self, name):
         super().__init__(name)
 
-class Symfunc(Symbol):
+class SymFunc(Symbol):
     def __init__(self, name, typeref, args):
         super().__init__(name)
         self.typeref = typeref
@@ -127,10 +127,6 @@ class SymExpr(Symbol):
         self.left.Print(fw, space+1)
         self.right.Print(fw, space+1)
         self.typeref.Print(fw, space+1)
-
-
-#-----------------NODES TO SYMBOLS DUPLICATE----------------------#
-
 
 class Node():
     @abstractmethod
@@ -419,7 +415,7 @@ class RecordNode(Expression):
             i.Print(fw, space+1)
         self.right.Print(fw, space+1)
 
-class toMassNode(Expression):
+class ArrayNode(Expression):
     def __init__(self, lex, middle):
         self.lexref = lex
         self.position = middle #[]
@@ -435,7 +431,7 @@ class toMassNode(Expression):
         fw.write(writeline1 +']\n')
         fw.write(writeline1 + self.lexref.typeref.name+'\n')
 
-class callNode(Expression):
+class СallNode(Expression):
     def __init__(self, lex, middle):
         self.lexref = lex
         self.middle = middle

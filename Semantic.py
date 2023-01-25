@@ -11,13 +11,13 @@ class Parser():
         self.stackTable = []
         self.curlex = ''
 
-    def Require(self, name):
+    def require(self, name):
         if self.lexAnalizer.getLex().lex not in name:
             waited = "' или '".join(name)
             raise  Exception(f'Строка  {str(self.curlex.line)}, символ {str(self.curlex.charn)}. Встречено "{self.lexAnalizer.getLex().lex}", ожидалось "{waited}"')
         self.lexAnalizer.nextLex()
 
-    def RequireType(self, typename):
+    def requireType(self, typename):
         if self.lexAnalizer.getLex().type not in typename:
             waited = "' или '".join(typename)
             raise  Exception(f'Строка  {str(self.curlex.line)}, символ {str(self.curlex.charn)}. Встречено "{self.lexAnalizer.getLex().lex}", ожидалось "{waited}"')
@@ -36,16 +36,16 @@ class Parser():
             if self.curlex.lex == 'program':
                 progW = Symbols.KeyWordNode(self.curlex)
                 self.curlex = self.lexAnalizer.nextLex()
-                self.RequireType(["Identifier"])
+                self.requireType(["Identifier"])
                 stmts.append(Symbols.ProgramNameNode(progW, self.curlex))
-                self.Require([";"])
+                self.require([";"])
             self.stackTable.append(OrderedDict())
             self.curlex = self.lexAnalizer.getLex()
             while self.curlex.lex in ["function", "procedure", 'var']:
                 if self.curlex.lex =="function":
                     parsed = self.parseFunction()
                 elif self.curlex.lex == "procedure":
-                    parsed = self.parsePocedure()
+                    parsed = self.parseProcedure()
                 elif self.curlex.lex == "var":
                     varstmts = []
                     progW = Symbols.KeyWordNode(self.curlex)
@@ -53,21 +53,21 @@ class Parser():
                     while self.curlex.lex not in ["function", "procedure", 'begin']:
                         for i in self.parseVar():
                             varstmts.append(i)
-                        self.Require([";"])
+                        self.require([";"])
                         self.curlex = self.lexAnalizer.getLex()
                     parsed = Symbols.ProgVarBlockNode(progW, varstmts)
                 stmts.append(parsed)
                 self.curlex = self.lexAnalizer.getLex()
             if self.curlex.lex == 'begin':
                 stmts.append(self.parseStmt())
-                self.Require(["."])
+                self.require(["."])
             return (Symbols.ProgrammNode(stmts))
         except Exception as e:
             return(Symbols.ErrorNode(e))
 
     def formalParameter(self, name):
         funcname = self.lexAnalizer.getLex()
-        self.RequireType(["Identifier"])
+        self.requireType(["Identifier"])
         self.lexAnalizer.nextLex()
         self.curlex = self.lexAnalizer.getLex()
         args = []
@@ -84,37 +84,38 @@ class Parser():
                     for i in self.parseVar():
                         args.append(Symbols.FuncProcValArg(i))
                 self.curlex = self.lexAnalizer.getLex()
-            self.Require([")"])
+            self.require([")"])
         else:
             args.append(Symbols.NullNode())
         return [funcname, args]
 
     def parseFunction(self):
-        self.Require(['function'])
+        self.require(['function'])
         self.stackTable.append(OrderedDict())
         params = self.formalParameter("function")
-        dotdot = self.lexAnalizer.getLex()
-        self.Require([":"])
-        self.RequireType(["Identifier"])
+        colon = self.lexAnalizer.getLex()
+        self.require([":"])
+        self.requireType(["Identifier"])
         resulttype = self.lexAnalizer.getLex()
         self.lexAnalizer.nextLex()
-        self.Require([";"])
+        self.require([";"])
         body = self.parseStmt()
-        self.Require([";"])
+        self.require([";"])
         self.stackTable.pop()
-        resultLexref = Symbols.Symfunc(params[0].lex, Symbols.SymType(resulttype.lex), params[1])
+
+        resultLexref = Symbols.SymFunc(params[0].lex, Symbols.SymType(resulttype.lex), params[1])
         self.stackTable[-1][params[0].lex] = resultLexref
         return Symbols.FuncNode(resultLexref, body)
     
-    def parsePocedure(self):
-        self.Require(['procedure'])
+    def parseProcedure(self):
+        self.require(['procedure'])
         self.stackTable.append(OrderedDict())
         params = self.formalParameter("procedure")
-        self.Require([";"])
+        self.require([";"])
         body = self.parseStmt()
-        self.Require([";"])
+        self.require([";"])
         self.stackTable.pop()
-        resultLexref = Symbols.Symfunc(params[0].lex, Symbols.SymVoid(""), params[1])
+        resultLexref = Symbols.SymFunc(params[0].lex, Symbols.SymVoid(""), params[1])
         self.stackTable[-1][params[0].lex] = resultLexref
         return Symbols.ProcedureNode(resultLexref, body)
 
@@ -123,7 +124,7 @@ class Parser():
         varnames = []
         if self.curlex.type == 'Delimiter':
             return(Symbols.NullNode())
-        self.RequireType(["Identifier"])
+        self.requireType(["Identifier"])
         if self.curlex.lex not in self.stackTable[-1]:
             self.stackTable[-1][self.curlex.lex] = ''
         else:
@@ -132,21 +133,21 @@ class Parser():
         varnames.append(self.curlex)
         while oplex.lex == ",":
             self.curlex = self.lexAnalizer.nextLex()
-            self.RequireType(["Identifier"])
+            self.requireType(["Identifier"])
             if self.curlex.lex not in self.stackTable[-1]:
                 self.stackTable[-1][self.curlex.lex] = ''
             else:
                 self.showError(f'Переменная {str(self.curlex.lex)} объявлена повторно')
-            varibl = self.parseFactor()
+            self.parseFactor()
             varnames.append(self.curlex)
             oplex = self.lexAnalizer.getLex()
         oprtn = Symbols.VarAssignNode(self.lexAnalizer.getLex())
-        self.Require([":", ":="])
+        self.require([":", ":="])
         self.curlex = self.lexAnalizer.getLex()
         if self.curlex.lex ==";":
             self.showError(f'Встречено {str(self.curlex.lex)}, ожидалось выражение')
         if (self.curlex.type =="Identifier" or self.curlex.lex == "array") and oprtn.name == ':':
-            vartype = self.parseInitType() # возращать надо SymType или SymArray
+            vartype = self.parseInitType()
             oprtn = Symbols.NullNode()
             self.curlex = self.lexAnalizer.nextLex()
             exprnode = Symbols.NullNode()
@@ -190,25 +191,27 @@ class Parser():
             stmt = self.parseWriteln()
         elif self.curlex.lex == "end" or self.curlex.lex == ";" :
             return Symbols.NullNode()
+ 
         if stmt:
             return stmt
         return Symbols.NullNode()
 
     def parseWriteln(self):
         callW = Symbols.KeyWordNode(self.lexAnalizer.getLex())
-        self.Require(['writeln'])
+        self.require(['writeln'])
         oplex = self.lexAnalizer.getLex()
-        self.Require(['('])
+        self.require(['('])
         tooutput = []
         while oplex.lex ==',' or oplex.lex =='(':
             tooutput.append(self.parseExpression())
             oplex = self.lexAnalizer.getLex()
-        self.Require([')'])
+        self.require([')'])
         return Symbols.WritelnNode(callW, tooutput)
 
     def parseInitType(self):
         typeLex = self.lexAnalizer.getLex()
         diap = []
+
         if typeLex.lex == "array":
             while typeLex.lex == "array":
                 oplex = self.lexAnalizer.nextLex()
@@ -218,8 +221,8 @@ class Parser():
                         parsedDiap = self.parseDiap()
                         oplex = self.lexAnalizer.getLex()
                         diap.append(parsedDiap)
-                    self.Require([']'])
-                self.Require(['of'])
+                    self.require([']'])
+                self.require(['of'])
                 typeLex = self.lexAnalizer.getLex()
             typel = self.parseInitType()
             return Symbols.SymArray(typel.name, diap)
@@ -228,41 +231,48 @@ class Parser():
 
     def parseDiap(self):
         fromexpr = self.parseExpression()
+
         try:
             fromN = int(fromexpr.lexref.name.lex)
         except:
             self.showError(f'При объявлении массива ожидалась константа')
+
         delim = self.lexAnalizer.getLex()
+
         if delim.lex in [',', ']']:
-            #return [0, fromN]
             self.showError(f'Ожидался диапазон')
-        self.Require(['..',','])
+        self.require(['..',','])
+
         toexpr = self.parseExpression()
         try:
             toN = int(toexpr.lexref.name.lex)
         except:
             self.showError(f'При объявлении массива ожидалась константа')
+
         if type(fromexpr) == Symbols.NullNode:
             self.showError(f'Встречено {self.curlex.lex}, ожидалось выражение')
         if type(toexpr) == Symbols.NullNode:
             self.showError(f'Встречено {self.curlex.lex}, ожидалось выражение')
+
         return [fromN, toN]
 
     def parseReadln(self):
         callW = Symbols.KeyWordNode(self.lexAnalizer.getLex())
-        self.Require(['readln'])
+        self.require(['readln'])
         oplex = self.lexAnalizer.getLex()
-        self.Require(['('])
+        self.require(['('])
         toinput = []
+
         while oplex.lex ==',' or oplex.lex =='(':
             toinput.append(self.parseExpression())
             oplex = self.lexAnalizer.getLex()
-        self.Require([')'])
+        self.require([')'])
         return Symbols.ReadlnNode(callW, toinput)
 
     def parseAssigmOrFunc(self):
         left = self.parseFactor() #Node
         self.curlex = self.lexAnalizer.getLex()
+
         if self.curlex.lex in [";", "end"]:
             return left
         elif self.curlex.lex in  [":=","+=","-=","*=","/="]:
@@ -273,10 +283,10 @@ class Parser():
                 self.showError(f'Нельзя преобразовать тип {str(right.lexref.typeref.name)} к {str(left.lexref.typeref.name)}')
             return Symbols.AssignNode(oper, right, left)
         else:
-            self.Require([":=","+=","-=","*=","/="]) 
+            self.require([":=","+=","-=","*=","/="]) 
 
     def parseBlock(self):
-        self.Require(['begin'])
+        self.require(['begin'])
         self.stackTable.append(OrderedDict())
         self.curlex = self.lexAnalizer.getLex()
         stmnts = []
@@ -286,30 +296,30 @@ class Parser():
             if self.curlex.lex != ";":
                 break;
             self.lexAnalizer.nextLex()
-        self.Require(['end'])
+        self.require(['end'])
         self.stackTable.pop()
         return Symbols.BlockNode(stmnts)
     
     def parseWhile(self):
-        self.Require(['while'])
+        self.require(['while'])
         expression = self.parseExpression()
         if expression.lexref.typeref.name!="boolean":
             self.showError(f'Условие должно быть типа boolean')
-        self.Require(['do'])
+        self.require(['do'])
         body = self.parseStmt()
         return Symbols.WhileNode(expression, body)
 
     def parseRepeatUntil(self):
-        self.Require(['repeat'])
+        self.require(['repeat'])
         body = self.parseStmt()
-        self.Require(['until'])
+        self.require(['until'])
         expression = self.parseExpression()
         if expression.lexref.typeref.name!="boolean":
             self.showError(f'Условие должно быть типа boolean')
         return Symbols.repeatUntilNode(expression, body)
 
     def parseFor(self):
-        self.Require(['for'])
+        self.require(['for'])
         self.stackTable.append(OrderedDict())
         condit1 = self.parseStmt()
         try:
@@ -320,7 +330,7 @@ class Parser():
                 self.showError(f'Ожидался тип integer')
                 ProgVarBlockNode
         toW = self.lexAnalizer.getLex()
-        self.Require(['to', 'downto'])
+        self.require(['to', 'downto'])
         condit2 = self.parseExpression()
         try:
             if condit2.lexref.typeref.name!="integer":
@@ -329,17 +339,17 @@ class Parser():
             if condit2.stmts[0].vartype.name!="integer":
                 self.showError(f'Ожидался тип integer')
                 ProgVarBlockNode
-        self.Require(['do'])
+        self.require(['do'])
         body = self.parseStmt()
         self.stackTable.pop()
         return Symbols.ForNode(condit1, condit2, body, toW)
 
     def parseIf(self):
-        self.Require(['if'])
+        self.require(['if'])
         expression = self.parseExpression()
         if expression.lexref.typeref.name!="boolean":
             self.showError(f'Условие должно быть типа boolean')
-        self.Require(['then'])
+        self.require(['then'])
         body = self.parseStmt()
         if self.lexAnalizer.getLex() == 'else':
             self.lexAnalizer.nextLex()
@@ -450,10 +460,12 @@ class Parser():
                     break;
             if not symb_var:
                 self.showError(f'Переменная {self.curlex.lex} не была объявлена')
-            oplex = self.lexAnalizer.getLex()  
+            oplex = self.lexAnalizer.getLex()
+
             if oplex.type == "Delimiter" and oplex.lex == "[":
                 mid =[]
                 middle = []
+
                 while oplex.lex in [',','[']:
                     self.lexAnalizer.nextLex() 
                     mid.append(self.parseExpression())
@@ -474,21 +486,22 @@ class Parser():
                             self.showError(f'Тип должен быть integer')
                     middle.append(mid[i].lexref.name.lex)
                 self.curlex = self.lexAnalizer.getLex()
-                self.Require(["]"])
-                return Symbols.toMassNode(symb_var, middle)
+                self.require(["]"])
+                return Symbols.ArrayNode(symb_var, middle)
 
             if oplex.type == "Delimiter" and oplex.lex == "(":
                 main = self.curlex
                 open = oplex
                 self.curlex = self.lexAnalizer.nextLex() 
                 mid = []
+                
                 if self.lexAnalizer.getLex().lex == ')':
                     self.curlex = self.lexAnalizer.nextLex() 
                 else:
                     while self.curlex.lex != ")":
                         mid.append(self.parseExpression())
                         self.curlex = self.lexAnalizer.getLex()
-                        self.Require([")", ","])
+                        self.require([")", ","])
                 if type(tableElem) != Symbols.SymVoid:
                     if len(mid) != len(tableElem.args):
                         self.showError(f'Указано неверное количество аргументов')
@@ -516,6 +529,6 @@ class Parser():
             curNode = self.parseExpression()
             self.checkNodeType([Symbols.NullNode], curNode)
             self.curlex = self.lexAnalizer.getLex()
-            self.Require([")"])
+            self.require([")"])
             return curNode
         return Symbols.NullNode()

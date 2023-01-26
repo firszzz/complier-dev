@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 import Lexem
 
 def treeLine(space) -> str:
-    return("│"*(space) + "├──")
+    return("│ "*(space) + "├── ")
 
 def default_wl(space) -> str:
     if space != 0:
@@ -152,7 +152,7 @@ class ProgramNameNode(Node):
 
     def Print(self, fw, space):
         self.lex.Print(fw, space+1)
-        fw.write("├──" + self.progname.lex + '\n')
+        fw.write("├── " + self.progname.lex + '\n')
 
 class ProgVarBlockNode(Node):
     def __init__(self, lex, stmts):
@@ -431,7 +431,7 @@ class ArrayNode(Expression):
         fw.write(writeline1 +']\n')
         fw.write(writeline1 + self.lexref.typeref.name+'\n')
 
-class СallNode(Expression):
+class CallNode(Expression):
     def __init__(self, lex, middle):
         self.lexref = lex
         self.middle = middle

@@ -1,5 +1,5 @@
-var a:integer;
-n:float;
-begin 
-	n:=a/5.5
+var x: String;
+
+begin
+    x := x - 1; 
 end.

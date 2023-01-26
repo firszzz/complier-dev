@@ -1,4 +1,5 @@
-var a:integer;
-begin 
-	a:=5*'55'
+var a: array of array of integer;
+
+begin
+	writeln(a[2, 1])	
 end.

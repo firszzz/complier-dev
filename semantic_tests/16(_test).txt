@@ -1,4 +1,0 @@
-var a:integer;
-begin
-	a:=67*7+a/5
-end.

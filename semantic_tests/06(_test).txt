@@ -1,4 +1,8 @@
-var a, n, a:integer;
-begin 
-	a:=38
+procedure Conc(a,b: String);
+begin
+end;
+
+var b: String;
+begin
+	Conc(1, '2')
 end.

@@ -7,7 +7,7 @@ import Parse
 import Semantic
 
 # -*- coding: utf-8 -*-
-
+ 
 TestType = enum.Enum(
     value='TestTypes',
     names = [
@@ -19,9 +19,8 @@ TestType = enum.Enum(
 )
 
 if __name__ == '__main__':
-    print()
-    testnum = int(input('Введите: <1> для лексического анализатора, <2> для анализа простых выражений,\n<3> для синтаксического анализатора, <4> для семантического анализатора: '))
-    print()
+    testnum = 4
+    #testnum = int(input('\nВведите: <1> для лексического анализатора, <2> для анализа простых выражений,\n<3> для синтаксического анализатора, <4> для семантического анализатора: '))
     correctd = 0
 
     directory = list(TestType)[testnum - 1].name

@@ -1,14 +1,1 @@
-var
-├──a
-│├──integer
-begin
-├──:=
-│├──a
-││├──integer
-││├──*
-│││├──5
-││││├──integer
-│││├──38
-││││├──integer
-│││├──integer
-end
+Строка  7, символ 20. Нельзя преобразовать тип integer к string

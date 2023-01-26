@@ -172,9 +172,9 @@ class Parser():
         self.Require(['..',','])
         toexpr = self.parseExpression()
         if type(fromexpr) == Node.NullNode:
-            return Node.ErrorNode(f'Строка {str(self.lexAnalizer.lexStartsFromLine) }, символ {str(self.lexAnalizer.lexStartsFrom)}. Встречено {self.curlex.lex}, ожидалось выражение')
+            return Node.ErrorNode(f'Строка {str(self.lexAnalizer.lexStartsFromLine)}, символ {str(self.lexAnalizer.lexStartsFrom)}. Встречено {self.curlex.lex}, ожидалось выражение')
         if type(toexpr) == Node.NullNode:
-            return Node.ErrorNode(f'Строка {str(self.lexAnalizer.lexStartsFromLine) }, символ {str(self.lexAnalizer.lexStartsFrom)}. Встречено {self.curlex.lex}, ожидалось выражение')
+            return Node.ErrorNode(f'Строка {str(self.lexAnalizer.lexStartsFromLine)}, символ {str(self.lexAnalizer.lexStartsFrom)}. Встречено {self.curlex.lex}, ожидалось выражение')
         return Node.DiapnNode(delim, fromexpr, toexpr)
 
     def parseStmt(self):

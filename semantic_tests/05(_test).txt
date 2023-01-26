@@ -1,5 +1,8 @@
-var a:integer;
-begin 
-	a:=38;
-	a:=380;
+function Add(a,b: integer):integer;
+begin
+end;
+
+var b: integer;
+begin
+	Add (1,2)
 end.

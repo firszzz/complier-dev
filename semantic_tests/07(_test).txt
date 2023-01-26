@@ -1,4 +1,8 @@
-var a:integer;
-begin 
-	a:=5*38
+function Conc(a,b: String): Integer;
+begin
+end;
+
+var b: String;
+begin
+	b := Conc('1', '2')
 end.

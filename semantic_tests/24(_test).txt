@@ -1,4 +1,0 @@
-var a: integer;
-begin
-  while a:=5+9 do a+=5
-end.

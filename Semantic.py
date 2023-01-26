@@ -222,6 +222,8 @@ class Parser():
                         oplex = self.lexAnalizer.getLex()
                         diap.append(parsedDiap)
                     self.require([']'])
+                else:
+                    diap.append([0, 1e3])
                 self.require(['of'])
                 typeLex = self.lexAnalizer.getLex()
             typel = self.parseInitType()
@@ -473,13 +475,13 @@ class Parser():
                 if len(mid) != len(tableElem.diap):
                     self.showError(f'Неверное количество индексов, ожидалось {len(tableElem.diap)}')
                 for i in range(len(mid)):
-                    mint = ''
+                    mid_ = ''
                     try:
-                        mint = int(mid[i].lexref.name.lex)
+                        mid_ = int(mid[i].lexref.name.lex)
                     except:
                         pass
-                    if mint:
-                        if mint <= tableElem.diap[i][0] or mint >= tableElem.diap[i][1]:
+                    if mid_:
+                        if mid_ <= tableElem.diap[i][0] or mid_ >= tableElem.diap[i][1]:
                             self.showError(f'Индекс за пределами диапазона')
                     else:
                         if mid[i].lexref.typeref.name != 'integer':
@@ -504,11 +506,11 @@ class Parser():
                         self.require([")", ","])
                 if type(tableElem) != Symbols.SymVoid:
                     if len(mid) != len(tableElem.args):
-                        self.showError(f'Указано неверное количество аргументов')
+                        self.showError(f'Передано неверное количество аргументов')
                     for i in range(len(mid)):
                         if mid[i].lexref.typeref.name != tableElem.args[i].varNode.vartype.name:
                             if not (mid[i].lexref.typeref.name == "integer" and tableElem.args[i].varNode.vartype.name == 'float'):
-                                self.showError(f'Указана переменная неверного типа')
+                                self.showError(f'Передана переменная неверного типа')
                 return Symbols.CallNode(tableElem, mid)
             return Symbols.IdentNode(symb_var)
         elif self.curlex.type == "Integer":

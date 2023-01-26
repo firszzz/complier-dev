@@ -1,5 +1,5 @@
-var a:integer;
-n:float;
-begin 
-	a:=n/5
+var a: array[1..10] of integer;
+
+begin
+    writeln(a[5);
 end.

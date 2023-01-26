@@ -1,4 +1,5 @@
-var a:integer;
-begin 
-	a:=38
+var arr1: array [1..10] of integer;
+
+begin
+    writeln(arr1[11]);
 end.

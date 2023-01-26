@@ -1,5 +1,8 @@
-var a:integer;
-n:float;
-begin 
-	n:=a/5
+var i : integer;
+
+begin
+    while i + 1 do begin
+        write(i);
+        i += 1;
+    end;
 end.

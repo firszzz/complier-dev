@@ -1,4 +1,9 @@
-var a:integer;
-begin 
-	a:=-38
+procedure Add(a,b: float);
+begin
+    a:= a + b;
+end;
+
+var a: integer;
+begin
+    Add(1)
 end.

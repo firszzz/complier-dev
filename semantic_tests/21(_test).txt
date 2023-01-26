@@ -1,5 +1,0 @@
-var a,n:integer;
-begin
-	repeat a += 1
-  	until n;
-end.

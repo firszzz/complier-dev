@@ -1,15 +1,23 @@
+function
+├── add
+│ ├── (
+│ │ ├── a
+│ │ │ ├── integer
+│ │ ├── b
+│ │ │ ├── integer
+│ ├── integer
+│ ├── )
+├── begin
+├── end
 var
-├──a
-│├──integer
+├── b
+│ ├── integer
 begin
-├──:=
-│├──a
-││├──integer
-│├──38
-││├──integer
-├──:=
-│├──a
-││├──integer
-│├──380
-││├──integer
+├── add
+│ ├── (
+│ │ ├── 1
+│ │ │ ├── integer
+│ │ ├── 2
+│ │ │ ├── integer
+│ ├── )
 end
